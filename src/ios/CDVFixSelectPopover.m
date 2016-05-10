@@ -13,7 +13,14 @@
 @implementation UIViewController(UIViewController_FixSelectPopover)
 
 +(void)load {
-    
+    // Check for iOS 7 and below.  Bail if we aren't iOS 8 or above.
+    NSArray *versionPieces = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+
+    // Check the Major version number only
+    if ([[versionPieces objectAtIndex:0] intValue] < 8) {
+        return;
+    }
+   
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
